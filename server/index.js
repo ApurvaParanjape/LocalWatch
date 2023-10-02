@@ -9,14 +9,15 @@ import postRoutes from "./routes/posts.js"
 /* Configuration */
 const app = express();
 
-// routes
-app.use('/posts',postRoutes);
-// app.use('/users',userRoutes);
 
 app.use(bodyParser.json({limit: "30mb", extended: true}));
 app.use(bodyParser.urlencoded({limit: "30mb", extended: true}));
 app.use(cors());
 dotenv.config();
+
+// routes
+app.use('/posts',postRoutes);
+// app.use('/users',userRoutes);
 
 const MONGO_URL = process.env.MONGO_URL;
 const PORT = process.env.PORT || 3001;

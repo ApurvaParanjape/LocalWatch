@@ -1,4 +1,5 @@
 import Post from "../models/Post.js";
+import express from 'express'
 
 export const getPosts = async(req,res)=>{
     try{
