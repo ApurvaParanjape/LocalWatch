@@ -5,7 +5,11 @@ import FlagOutlinedIcon from '@mui/icons-material/FlagOutlined';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import moment from 'moment'
+import {useDispatch} from 'react-redux';
+import { deletePost, likePost , flagPost} from '../../../actions/posts.js'
 const Post = ({post, setCurrentId}) => {
+  
+  const dispatch = useDispatch()
   return (
     <Card sx={{height: 'fit-content', marginTop: "2rem", width: '34rem', backgroundColor: '#f9fce3'}}>
       <div style={{display: 'flex', justifyContent:'space-between'}}>
@@ -34,19 +38,19 @@ const Post = ({post, setCurrentId}) => {
       </CardContent>
 
       <CardActions>
-        <Button>
+        <Button onClick={() => dispatch(likePost(post._id))}>
         <ThumbUpAltIcon/>
         UpVote
         {post.likeCount}
         </Button>
 
-        <Button>
+        <Button onClick={() => dispatch(flagPost(post._id))}>
         <FlagOutlinedIcon/>
         Flag
         {post.flagCount}
         </Button>
 
-        <Button onClick={()=> {}}>
+        <Button onClick={()=> dispatch(deletePost(post._id))}>
         <DeleteIcon/>
         Delete
         </Button>
