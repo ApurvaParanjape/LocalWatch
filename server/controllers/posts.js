@@ -1,5 +1,6 @@
 import Post from "../models/Post.js";
 import express from 'express'
+import mongoose from "mongoose";
 
 export const getPosts = async(req,res)=>{
     try{
@@ -23,4 +24,15 @@ export const createPost = async(req, res)=>{
     }catch(error){
         res.status(409).json({commet: "Problem in createPost method", msg: error.message});
     }
+}
+
+export const updatePost = async(req, res) =>{
+    const {id: _id} = req.params;
+    const changedPost = req.body;
+
+    if(!mongoose.Types.ObjectId.isValid(_id)) return res.status(404).send('No post with that id');
+
+    const updatedPost = await Post.findByIdAndUpdate(_id, changedPost, { new: true});
+
+    res.json(updatedPost);
 }

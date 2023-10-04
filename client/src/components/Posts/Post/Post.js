@@ -3,9 +3,9 @@ import { Card,CardHeader, CardActions, CardContent, CardMedia, Button, Typograph
 import ThumbUpAltIcon from '@mui/icons-material/ThumbUpAltOutlined';
 import FlagOutlinedIcon from '@mui/icons-material/FlagOutlined';
 import DeleteIcon from '@mui/icons-material/Delete';
-import MoreHorizIcon from '@mui/icons-material/MoreHoriz'
+import EditIcon from '@mui/icons-material/Edit';
 import moment from 'moment'
-const Post = ({post}) => {
+const Post = ({post, setCurrentId}) => {
   return (
     <Card sx={{height: 'fit-content', marginTop: "2rem", width: '34rem', backgroundColor: '#f9fce3'}}>
       <div style={{display: 'flex', justifyContent:'space-between'}}>
@@ -13,8 +13,8 @@ const Post = ({post}) => {
       title={post.creator}
       subheader={moment(post.createdAt).format("MMM Do YY")}
       />
-      <Button>
-        <MoreHorizIcon/>
+      <Button onClick={()=> setCurrentId(post._id)}>
+        <EditIcon />
       </Button>
       </div>
       <CardContent>
@@ -46,7 +46,7 @@ const Post = ({post}) => {
         {post.flagCount}
         </Button>
 
-        <Button>
+        <Button onClick={()=> {}}>
         <DeleteIcon/>
         Delete
         </Button>

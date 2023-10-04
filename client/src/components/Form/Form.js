@@ -1,10 +1,10 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { TextField, Button, Typography, Paper} from '@mui/material'
 import FileBase from 'react-file-base64';
-import { useDispatch } from 'react-redux';
-import { createPost } from '../../actions/posts';
+import { useDispatch, useSelector } from 'react-redux';
+import { createPost , updatePost } from '../../actions/posts';
 
-const Form = () => {
+const Form = ({currentId, setCurrentId}) => {
   const [postData, setPostData]= useState({
     creator: '',
     title: '',
@@ -13,26 +13,45 @@ const Form = () => {
     image: ''
   })
   const dispatch = useDispatch();
+  const post = useSelector((state)=> currentId ? state.posts.find((p)=> p._id === currentId): null);
+
+  useEffect(()=>{
+    if(post) setPostData(post);
+  },[post])
 
   const handleSubmit = (e)=>{
     e.preventDefault();
 
-    dispatch(createPost(postData))
+    if(currentId){
+      dispatch(updatePost(currentId, postData))
+    }else{
+      dispatch(createPost(postData))
+    }
+    clear();
 
   }
   const clear = () =>{
+    setCurrentId(null);
+    setPostData({
+      creator: '',
+      title: '',
+      description: '',
+      location: '',
+      image: ''
+    })
     
   }
 
   return (
     <Paper sx={{
+      width: "25rem",
       padding: "2rem",
       margin: "2rem"
     }}>
     <form autoComplete='off' noValidate onSubmit={handleSubmit} style={{ display: 'flex',
     flexWrap: 'wrap',
     justifyContent: 'center',}}>
-      <Typography variant='h6'>Create a Post</Typography>
+      <Typography variant='h6'>{currentId? 'Edit' : 'Create'} a Post</Typography>
       <TextField sx={{marginBottom: '0.5rem'}} name='creator' variant='outlined' label='Creator' fullWidth value={postData.creator} 
       onChange={(e)=> setPostData({...postData, creator: e.target.value})}/>
 

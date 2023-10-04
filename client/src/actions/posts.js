@@ -19,3 +19,13 @@ export const createPost =(post)=> async(dispatch)=>{
         console.log({comment: 'something wrong in actions/posts.js/createPost', msg: error.message})
     }
 }
+
+export const updatePost =(id, post)=> async(dispatch) =>{
+    try {
+        const {data} =await api.updatePost(id, post);
+        
+        dispatch({ type: 'UPDATE', payload: data});
+    } catch (error) {
+        console.log({comment: 'problem in actions/posts.js/updatepost', error: error});
+    }
+} 
