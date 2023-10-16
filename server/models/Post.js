@@ -7,6 +7,7 @@ const postSchema = mongoose.Schema({
         required: true,
     },
     description : String,
+    name: String,
     creator : String,
     image : String,
     location: {
@@ -14,13 +15,13 @@ const postSchema = mongoose.Schema({
         required: true,
     },
     userLocation: String,
-    likeCount:{
-        type : Number,
-        default: 0,
+    likes:{
+        type : [String],
+        default: [],
     },
-    flagCount: {
-        type : Number,
-        default: 0,
+    flag: {
+        type : [String],
+        default: [],
     },
     createdAt:{
         type: Date,

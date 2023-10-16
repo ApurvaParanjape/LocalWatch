@@ -4,7 +4,7 @@ import mongoose from "mongoose";
 import cors from "cors";
 import dotenv from 'dotenv'
 import postRoutes from "./routes/posts.js"
-// import userRoutes from "./routes/users.js"
+import userRoutes from "./routes/users.js"
 
 /* Configuration */
 const app = express();
@@ -17,7 +17,7 @@ dotenv.config();
 
 // routes
 app.use('/posts',postRoutes);
-// app.use('/users',userRoutes);
+app.use('/users',userRoutes);
 
 const MONGO_URL = process.env.MONGO_URL;
 const PORT = process.env.PORT || 3001;

@@ -16,7 +16,7 @@ export const getPosts = async(req,res)=>{
 
 export const createPost = async(req, res)=>{
     const post = req.body;
-    const newPost = new Post(post);
+    const newPost = new Post({ ...post, creator: req.userId, createdAt: new Date().toISOString()});
     
     try{
         await newPost.save();
@@ -50,14 +50,23 @@ export const deletePost = async(req, res)=>{
 export const likePost = async(req, res) =>{
     try {
         const {id} = req.params;
+
+        if(!req.userId) return res.json({ msg: 'unauthenticated'});
     
         if(!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send('No post with that id');
     
         const post = await Post.findById(id);
-        console.log('post found')
-        const updatedPost = await Post.findByIdAndUpdate(id, { likeCount: post.likeCount + 1}, {new : true});
+      
+        const index = post.likes.findIndex((id)=> id === String(req.userId));
+
+        if(index=== -1){
+            post.likes.push(req.userId);
+        }else{
+            post.likes = post.likes.filter((id)=> id !== String(req.userId))
+        }
+        const updatedPost = await Post.findByIdAndUpdate(id, post, {new : true});
     
-        res.json(updatedPost);
+        res.status(200).json(updatedPost);
         
     } catch (error) {
         res.status(400).json({error, comment: 'problem in likepost backend'})
@@ -66,11 +75,21 @@ export const likePost = async(req, res) =>{
 
 export const flagPost = async(req, res) =>{
     const {id} = req.params;
- 
+    if(!req.userId) return res.json({ msg: 'unauthenticated'});
+
     if(!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send('No post with that id');
 
     const post = await Post.findById(id);
-    const updatedPost = await Post.findByIdAndUpdate(id, { flagCount: post.flagCount + 1}, {new : true});
+
+    const index = post.flag.findIndex((id)=> id === String(req.userId));
+
+        if(index=== -1){
+            post.flag.push(req.userId)
+        }else{
+            post.flag = post.flag.filter((id)=> id !== String(req.userId))
+        }
+
+    const updatedPost = await Post.findByIdAndUpdate(id, post, {new : true});
 
     res.json(updatedPost);
 }

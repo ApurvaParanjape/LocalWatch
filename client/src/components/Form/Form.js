@@ -5,8 +5,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { createPost , updatePost } from '../../actions/posts';
 
 const Form = ({currentId, setCurrentId}) => {
+  const user = JSON.parse(localStorage.getItem('profile'));
   const [postData, setPostData]= useState({
-    creator: '',
     title: '',
     description: '',
     location: '',
@@ -23,17 +23,26 @@ const Form = ({currentId, setCurrentId}) => {
     e.preventDefault();
 
     if(currentId){
-      dispatch(updatePost(currentId, postData))
+      dispatch(updatePost(currentId, {...postData, name: user?.result?.name}))
     }else{
-      dispatch(createPost(postData))
+      dispatch(createPost({...postData, name: user?.result?.name}))
     }
     clear();
-
   }
+
+  if(!user?.result?.name){
+    return (
+      <Paper sx={{marginTop: '2rem', height: '4rem'}}>
+        <Typography variant='h6' align='center'>
+          Please Sign in to create a post.
+        </Typography>
+      </Paper>
+    )
+  }
+
   const clear = () =>{
     setCurrentId(null);
     setPostData({
-      creator: '',
       title: '',
       description: '',
       location: '',
@@ -52,8 +61,8 @@ const Form = ({currentId, setCurrentId}) => {
     flexWrap: 'wrap',
     justifyContent: 'center',}}>
       <Typography variant='h6'>{currentId? 'Edit' : 'Create'} a Post</Typography>
-      <TextField sx={{marginBottom: '0.5rem'}} name='creator' variant='outlined' label='Creator' fullWidth value={postData.creator} 
-      onChange={(e)=> setPostData({...postData, creator: e.target.value})}/>
+      {/* <TextField sx={{marginBottom: '0.5rem'}} name='creator' variant='outlined' label='Creator' fullWidth value={postData.creator} 
+      onChange={(e)=> setPostData({...postData, creator: e.target.value})}/> */}
 
       <TextField sx={{marginBottom: '0.5rem'}} name='title' variant='outlined' label='Title' fullWidth value={postData.title} 
       onChange={(e)=> setPostData({...postData, title: e.target.value})}/>
