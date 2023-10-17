@@ -40,7 +40,7 @@ const Post = ({post, setCurrentId}) => {
   };
 
   return (
-    <Card sx={{height: 'fit-content', marginTop: "2rem",marginBottom: "1rem", width: '34rem', backgroundColor: '#fdfbec', boxShadow: 3}}>
+    <Card raised elevation={6} sx={{height: 'fit-content', marginTop: "2rem",marginBottom: "1rem", width: '34rem', backgroundColor: '#fdfbec', boxShadow: 3}}>
       <div style={{display: 'flex', justifyContent:'space-between'}}>
       <CardHeader
       title={post.name}

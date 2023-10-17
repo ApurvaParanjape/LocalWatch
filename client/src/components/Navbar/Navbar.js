@@ -63,7 +63,7 @@ const Navbar = () => {
                       <div style={{display: 'flex', justifyContent: 'space-between'}}>
                         <div style={{display: 'flex'}}>
                             <Avatar src={user.result.imageUrl} alt={user.result.name}>{user.result.name.charAt(0)}</Avatar>
-                            <Typography variant='h6'>{user.result.name}</Typography>
+                            <Typography variant='h6' >{user.result.name}</Typography>
                         </div>
                             <Button variant='contained' color='secondary' onClick={logout} sx={{marginLeft: '2rem'}}>Log Out</Button>
                       </div>

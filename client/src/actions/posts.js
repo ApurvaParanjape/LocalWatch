@@ -1,5 +1,5 @@
 import * as api from '../api'
-import {FETCH_ALL, CREATE, DELETE, UPDATE, FLAG, LIKE } from '../constants/actionTypes';
+import {FETCH_BY_SEARCH, FETCH_ALL, CREATE, DELETE, UPDATE, FLAG, LIKE } from '../constants/actionTypes';
 
 export const getPosts = ()=> async (dispatch) =>{
     try {
@@ -8,6 +8,16 @@ export const getPosts = ()=> async (dispatch) =>{
         dispatch({type: FETCH_ALL, payload: data});
     } catch (error) {
         console.log({comment: 'something wrong in actions/posts.js/getPosts', msg: error.message})
+    }
+}
+
+export const getPostBySearch = (searchQuery) => async(dispatch) =>{
+    try {
+        const {data: {data}} = await api.fetchPostsBySearch(searchQuery);
+        dispatch({type: FETCH_BY_SEARCH, payload: data});
+        
+    } catch (error) {
+        console.log(error);
     }
 }
 
@@ -60,3 +70,4 @@ export const flagPost = (id) => async(dispatch) =>{
         console.log({comment: 'error in actions/posts/flagPost', error: error});
     }
 }
+

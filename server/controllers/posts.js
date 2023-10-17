@@ -14,6 +14,21 @@ export const getPosts = async(req,res)=>{
     }
 }
 
+export const getPostsBySearch = async(req, res) =>{
+    const { searchQuery, locations} = req.query 
+
+    try {
+        const location = new RegExp(searchQuery, 'i');
+        const title = new RegExp(searchQuery, 'i');
+
+        const posts = await Post.find({ $or: [ {location},{title}, {location: {$in: locations.split(',')}}]})
+
+        res.json({data: posts});
+    } catch (error) {
+        res.status(404).json({error, msg: 'something wrong in controller/posts/getpostsbysearch'})
+    }
+}
+
 export const createPost = async(req, res)=>{
     const post = req.body;
     const newPost = new Post({ ...post, creator: req.userId, createdAt: new Date().toISOString()});

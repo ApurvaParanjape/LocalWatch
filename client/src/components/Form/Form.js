@@ -55,8 +55,12 @@ const Form = ({currentId, setCurrentId}) => {
     <Paper sx={{
       width: "25rem",
       padding: "2rem",
-      margin: "2rem"
-    }}>
+      margin: "2rem",
+      marginLeft: '0',
+      borderRadius:"1rem"
+    }}
+    raised elevation={6}
+    >
     <form autoComplete='off' noValidate onSubmit={handleSubmit} style={{ display: 'flex',
     flexWrap: 'wrap',
     justifyContent: 'center',}}>
