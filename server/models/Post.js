@@ -15,6 +15,10 @@ const postSchema = mongoose.Schema({
         required: true,
     },
     userLocation: String,
+    isVerified: {
+        type: Boolean,
+        default: false
+    },
     likes:{
         type : [String],
         default: [],

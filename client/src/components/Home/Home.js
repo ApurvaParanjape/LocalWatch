@@ -22,6 +22,8 @@ const Home = () => {
   const searchQuery =  query.get('searchQuery');
   const [search, setSearch] = useState('');
   const [locations, setLocations] = useState([]);
+  const [currPincode, setCurrPincode] = useState("");
+  const [isVerified, setIsVerified] = useState(false);
   useEffect(()=>{
     dispatch(getPosts())
   }, [currentId, dispatch]);
@@ -50,7 +52,7 @@ const Home = () => {
         <Container>
           <Grid container justifyContent="space-between" alignItems="stretch" spacing={3}>
               <Grid item xs={12} sm={6} >
-                <Posts setCurrentId={setCurrentId}/>
+                <Posts setCurrentId={setCurrentId} isVerified={isVerified}/>
               </Grid>
               <Grid item xs={12} sm={4}>
                 <AppBar
@@ -87,8 +89,8 @@ const Home = () => {
                   </Stack> */}
                   <Button variant='contained' onClick={searchPost} color='primary'>Search</Button>
                 </AppBar>
-                <Form currentId={currentId} setCurrentId={setCurrentId}/>
-                <Paper
+                <Form currentId={currentId} setCurrentId={setCurrentId} currPincode={currPincode} setCurrPincode={setCurrPincode} setIsVerified={setIsVerified} />
+                {/* <Paper
                 sx={{
                   borderRadius: 4,
                   padding: '16px',
@@ -98,7 +100,7 @@ const Home = () => {
                 elevation={6}
                 >
                   <Paginate/>
-                </Paper>
+                </Paper> */}
               </Grid>
           </Grid>
         </Container>

@@ -4,14 +4,17 @@ import FileBase from 'react-file-base64';
 import { useDispatch, useSelector } from 'react-redux';
 import { createPost , updatePost } from '../../actions/posts';
 
-const Form = ({currentId, setCurrentId}) => {
+const Form = ({currentId, setCurrentId,currPincode, setCurrPincode}) => {
   const user = JSON.parse(localStorage.getItem('profile'));
   const [postData, setPostData]= useState({
     title: '',
     description: '',
     location: '',
-    image: ''
+    pincode: '',
+    image: '',
+    isVerified: false,
   })
+ 
   const dispatch = useDispatch();
   const post = useSelector((state)=> currentId ? state.posts.find((p)=> p._id === currentId): null);
 
@@ -21,14 +24,50 @@ const Form = ({currentId, setCurrentId}) => {
 
   const handleSubmit = (e)=>{
     e.preventDefault();
+    // if(postData.pincode === currPincode && currPincode!=="" && postData.pincode!=="") {
+    //   console.log('location verified')
+    //   setPostData({...postData, isVerified: !postData.isVerified });
+      
+    // }
 
     if(currentId){
       dispatch(updatePost(currentId, {...postData, name: user?.result?.name}))
     }else{
       dispatch(createPost({...postData, name: user?.result?.name}))
     }
+
+    
+    // else{
+    //   console.log('location not verified')
+    //   setPostData({...postData, isVerified: false});
+    // }
+
     clear();
   }
+
+  const getLocation = () => {
+    navigator.geolocation.getCurrentPosition((position) =>{
+      const c = position.coords;
+      const url = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${c.latitude}&lon=${c.longitude}`;
+
+      fetch(url).then(res => res.json()).then(data => {
+          // console.table(data.address);
+          console.log(data.address.postcode)
+           setCurrPincode(data.address.postcode);
+          
+      }).catch((e) => {
+          console.log(e);
+      })
+  }, function(error) {
+console.log(error)
+},{maximumAge:60000, timeout:5000, enableHighAccuracy:true})
+
+if(postData.pincode === currPincode && currPincode!=="" && postData.pincode!=="") {
+  console.log('location verified')
+  setPostData({...postData, isVerified: !postData.isVerified });
+  
+}
+  } 
 
   if(!user?.result?.name){
     return (
@@ -46,7 +85,8 @@ const Form = ({currentId, setCurrentId}) => {
       title: '',
       description: '',
       location: '',
-      image: ''
+      pincode:'',
+      image: '',
     })
     
   }
@@ -59,7 +99,7 @@ const Form = ({currentId, setCurrentId}) => {
       marginLeft: '0',
       borderRadius:"1rem"
     }}
-    raised elevation={6}
+    elevation={6}
     >
     <form autoComplete='off' noValidate onSubmit={handleSubmit} style={{ display: 'flex',
     flexWrap: 'wrap',
@@ -76,6 +116,11 @@ const Form = ({currentId, setCurrentId}) => {
 
       <TextField sx={{marginBottom: '0.5rem'}} name='location' variant='outlined' label='Location' fullWidth value={postData.location} 
       onChange={(e)=> setPostData({...postData, location: e.target.value})}/>
+
+      <TextField sx={{marginBottom: '0.5rem'}} name='pincode' variant='outlined' label='Pincode' fullWidth value={postData.pincode} 
+      onChange={(e)=> setPostData({...postData, pincode: e.target.value})}/>
+
+      <Button onClick={getLocation}>Verify post</Button>
 
       <div style={{marginLeft: '1rem'}}>
         <FileBase  type="file"  multiple={false} onDone={({ base64 }) => setPostData({ ...postData, image: base64 })}/>

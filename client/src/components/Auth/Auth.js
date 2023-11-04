@@ -2,7 +2,7 @@ import { Avatar, Button, Paper, Grid, Typography, Container, Icon } from '@mui/m
 import React, { useState } from 'react'
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Input from './Input';
-import { GoogleLogin} from 'react-google-login'
+// import { GoogleLogin} from 'react-google-login'
 import Gicon from './GIcon';
 import {useDispatch} from 'react-redux';
 import { useNavigate } from 'react-router-dom';
@@ -96,7 +96,7 @@ const Auth = () => {
                     >
                         {isSignUp ? 'Sign Up' : 'Sign In'}
                     </Button>
-                    <GoogleLogin
+                    {/* <GoogleLogin
                             clientId='778182229201-cb333ju3jho3rtguakqclrh52e2ldsba.apps.googleusercontent.com'
                             render={(renderProps)=>(
                                 <Button color='primary' fullWidth onClick={renderProps.onClick} disabled={renderProps.disabled} startIcon={<Gicon/>} >
@@ -106,7 +106,7 @@ const Auth = () => {
                             onSuccess={googleSuccess}
                             onFailure={googleFailure}
                             cookiePolicy='single_host_origin'
-                            />
+                            /> */}
                     <Grid container>
                         <Grid item>
                             <Button onClick={switchMode}>

@@ -4,6 +4,7 @@ import localwatch from '../../images/localwatch.png'
 import {Link, useNavigate, useLocation} from 'react-router-dom';
 import {useDispatch} from 'react-redux';
 import decode from 'jwt-decode'
+import './style.css'
 const Navbar = () => {
   const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')));
   const dispatch = useDispatch()
@@ -42,12 +43,12 @@ const Navbar = () => {
         color:'black',
         display: 'flex',
         flexDirection: 'row',
-        justifyContent: 'center',
+        justifyContent: 'space-between',
         alignItems: 'center',
-        marginLeft: '-5',
+        marginLeft: '0',
         marginRight: '0'
       }}>
-        <div>
+        <div className='app_heading'>
         <img src={localwatch} alt="LocalWatch" height="60"
         style={{marginLeft: '15px'}}/>
         <Typography variant='h2' align='center' component={Link} to='/'
@@ -63,7 +64,7 @@ const Navbar = () => {
                       <div style={{display: 'flex', justifyContent: 'space-between'}}>
                         <div style={{display: 'flex'}}>
                             <Avatar src={user.result.imageUrl} alt={user.result.name}>{user.result.name.charAt(0)}</Avatar>
-                            <Typography variant='h6' >{user.result.name}</Typography>
+                            <Typography marginLeft={1} marginTop={0.5} variant='h5' sx={{textDecoration: 'none'}}>{user.result.name}</Typography>
                         </div>
                             <Button variant='contained' color='secondary' onClick={logout} sx={{marginLeft: '2rem'}}>Log Out</Button>
                       </div>

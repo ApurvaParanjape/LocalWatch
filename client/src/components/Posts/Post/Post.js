@@ -1,11 +1,12 @@
 import React from 'react'
-import { Card,CardHeader, CardActions, CardContent, CardMedia, Button, Typography, TextField } from '@mui/material'
+import { Card,CardHeader, CardActions, CardContent, CardMedia, Button, Typography, TextField, Avatar } from '@mui/material'
 import ThumbUpAltIcon from '@mui/icons-material/ThumbUpAlt';
 import ThumbUpAltOutlinedIcon from '@mui/icons-material/ThumbUpAltOutlined';
 import FlagOutlinedIcon from '@mui/icons-material/FlagOutlined';
 import FlagIcon from '@mui/icons-material/Flag';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
+import VerifiedIcon from '@mui/icons-material/Verified';
 import moment from 'moment'
 import {useDispatch} from 'react-redux';
 import { deletePost, likePost , flagPost} from '../../../actions/posts.js'
@@ -30,9 +31,9 @@ const Post = ({post, setCurrentId}) => {
     if (post.flag.length > 0) {
       return post.likes.find((flag) => flag === (user?.result?.googleId || user?.result?._id))
         ? (
-          <><FlagIcon sx={{color: 'red[500]'}} fontSize="small" /></>
+          <><FlagIcon color='error' sx={{color: 'red[500]'}} fontSize="small" /></>
         ) : (
-          <><FlagOutlinedIcon fontSize="small" /></>
+          <><FlagOutlinedIcon color='error' fontSize="small" /></>
         );
     }
 
@@ -43,6 +44,9 @@ const Post = ({post, setCurrentId}) => {
     <Card raised elevation={6} sx={{height: 'fit-content', marginTop: "2rem",marginBottom: "1rem", width: '34rem', backgroundColor: '#fdfbec', boxShadow: 3}}>
       <div style={{display: 'flex', justifyContent:'space-between'}}>
       <CardHeader
+      avatar={
+        <Avatar>{post.name.slice(0,1)}</Avatar>
+      }
       title={post.name}
       subheader={moment(post.createdAt).format("MMM Do YY")}
       />
@@ -83,6 +87,12 @@ const Post = ({post, setCurrentId}) => {
         
         {post.flag.length}
         </Button>
+
+        {
+          (post.isVerified) && <Button>
+            <VerifiedIcon color='success'/>
+          </Button>
+        }
         </div>
 
       {(user?.result?.googleId === post?.creator || user?.result?._id === post?.creator) && (
