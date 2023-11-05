@@ -4,8 +4,9 @@ import localwatch from '../../images/localwatch.png'
 import {Link, useNavigate, useLocation} from 'react-router-dom';
 import {useDispatch} from 'react-redux';
 import decode from 'jwt-decode'
+import DarkModeIcon from '@mui/icons-material/DarkMode';
 import './style.css'
-const Navbar = () => {
+const Navbar = ({darkMode, setDarkMode}) => {
   const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')));
   const dispatch = useDispatch()
   const navigate = useNavigate();
@@ -39,8 +40,8 @@ const Navbar = () => {
         borderRadius: "1rem",
         width: "100%",
         text:'white',
-        backgroundColor:"white",
-        color:'black',
+        backgroundColor:`${darkMode? '#031537': 'white'}`,
+        color:`${darkMode? 'white': 'black'}`,
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'space-between',
@@ -51,22 +52,25 @@ const Navbar = () => {
         <div className='app_heading'>
         <img src={localwatch} alt="LocalWatch" height="60"
         style={{marginLeft: '15px'}}/>
-        <Typography variant='h2' align='center' component={Link} to='/'
+        <Typography variant='h3' component={Link} to='/'
         sx={{
-          color: 'black'
+          color: `${darkMode? 'white': 'black'}`,
+          textDecoration: 'none',
+          marginBottom: '1rem'
         }}>LocalWatch</Typography>
         </div>
 
         <div>
             <Toolbar>
                 {
-                    user? (
-                      <div style={{display: 'flex', justifyContent: 'space-between'}}>
+                  user? (
+                    <div style={{display: 'flex', justifyContent: 'space-between'}}>
                         <div style={{display: 'flex'}}>
+                        <DarkModeIcon sx={{marginRight: '23px', fontSize: '2rem', cursor: 'pointer', color:`${darkMode? 'white': 'black'}`}} onClick={()=> setDarkMode(!darkMode)}/>
                             <Avatar src={user.result.imageUrl} alt={user.result.name}>{user.result.name.charAt(0)}</Avatar>
-                            <Typography marginLeft={1} marginTop={0.5} variant='h5' sx={{textDecoration: 'none'}}>{user.result.name}</Typography>
+                            <Typography marginLeft={1} marginTop={0.5} variant='h6' sx={{textDecoration: 'none'}}>{user.result.name}</Typography>
                         </div>
-                            <Button variant='contained' color='secondary' onClick={logout} sx={{marginLeft: '2rem'}}>Log Out</Button>
+                            <Button variant='contained' color={`${darkMode? 'secondary': 'primary'}`} onClick={logout} sx={{marginLeft: '2rem'}}>Log Out</Button>
                       </div>
                     ): (
                         <Button variant='contained' component={Link} to='/auth'>Sign In</Button>

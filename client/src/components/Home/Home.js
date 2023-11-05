@@ -13,7 +13,7 @@ function useQuery() {
   return new URLSearchParams(useLocation().search);
 }
 
-const Home = () => {
+const Home = ({darkMode}) => {
   const dispatch = useDispatch();
   const [currentId, setCurrentId] = useState(null);
   const query = useQuery();
@@ -52,7 +52,7 @@ const Home = () => {
         <Container>
           <Grid container justifyContent="space-between" alignItems="stretch" spacing={3}>
               <Grid item xs={12} sm={6} >
-                <Posts setCurrentId={setCurrentId} isVerified={isVerified}/>
+                <Posts setCurrentId={setCurrentId} isVerified={isVerified} darkMode={darkMode}/>
               </Grid>
               <Grid item xs={12} sm={4}>
                 <AppBar
@@ -62,6 +62,8 @@ const Home = () => {
                   marginBottom: '1rem',
                   display: 'flex',
                   padding: '16px',
+                  backgroundColor: `${darkMode? '#091e47': 'white'}`,
+                    color: `${darkMode? 'white': 'black'}`
                 }}
                 position='static'
                 color='inherit'
@@ -71,7 +73,10 @@ const Home = () => {
                   variant='outlined' 
                   label='Search by location'
                   sx={{
-                    marginBottom: '1rem'
+                    marginBottom: '1rem',
+                    backgroundColor: `${darkMode? '#091e47': 'white'}`,
+                    input: {color: `${darkMode? 'white': 'black'}`},
+                    label: {color: `${darkMode? 'white': 'black'}`}
                   }}
                   onKeyDown={handleKeyPress}
                   fullWidth
@@ -87,9 +92,9 @@ const Home = () => {
                     variant='outlined'
                   />
                   </Stack> */}
-                  <Button variant='contained' onClick={searchPost} color='primary'>Search</Button>
+                  <Button variant='contained' onClick={searchPost} color={`${darkMode? 'secondary': 'primary'}`}>Search</Button>
                 </AppBar>
-                <Form currentId={currentId} setCurrentId={setCurrentId} currPincode={currPincode} setCurrPincode={setCurrPincode} setIsVerified={setIsVerified} />
+                <Form currentId={currentId} setCurrentId={setCurrentId} currPincode={currPincode} setCurrPincode={setCurrPincode} setIsVerified={setIsVerified} darkMode={darkMode}/>
                 {/* <Paper
                 sx={{
                   borderRadius: 4,

@@ -3,7 +3,7 @@ import Post from './Post/Post'
 import {useSelector} from 'react-redux'
 import { CircularProgress, Grid, Container } from '@mui/material'
 
-const Posts = ({setCurrentId}) => {
+const Posts = ({setCurrentId, darkMode}) => {
   const posts = useSelector((state)=> state.posts);
 
   console.log(posts)
@@ -12,7 +12,7 @@ const Posts = ({setCurrentId}) => {
       <Container sx={{height: 'fit-content'}}>
         {posts.map((post)=>(
           <Container key={post._id}>
-          <Post post={post} setCurrentId={setCurrentId}/>
+          <Post post={post} setCurrentId={setCurrentId} darkMode={darkMode}/>
           </Container>
         ))}
       </Container>

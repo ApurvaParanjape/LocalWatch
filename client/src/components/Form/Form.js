@@ -4,7 +4,7 @@ import FileBase from 'react-file-base64';
 import { useDispatch, useSelector } from 'react-redux';
 import { createPost , updatePost } from '../../actions/posts';
 
-const Form = ({currentId, setCurrentId,currPincode, setCurrPincode}) => {
+const Form = ({currentId, setCurrentId,currPincode, setCurrPincode, darkMode}) => {
   const user = JSON.parse(localStorage.getItem('profile'));
   const [postData, setPostData]= useState({
     title: '',
@@ -96,6 +96,8 @@ if(postData.pincode === currPincode && currPincode!=="" && postData.pincode!==""
       width: "25rem",
       padding: "2rem",
       margin: "2rem",
+      backgroundColor: `${darkMode? '#091e47': 'white'}`,
+      color: `${darkMode? 'white': 'black'}`,
       marginLeft: '0',
       borderRadius:"1rem"
     }}
@@ -108,21 +110,25 @@ if(postData.pincode === currPincode && currPincode!=="" && postData.pincode!==""
       {/* <TextField sx={{marginBottom: '0.5rem'}} name='creator' variant='outlined' label='Creator' fullWidth value={postData.creator} 
       onChange={(e)=> setPostData({...postData, creator: e.target.value})}/> */}
 
-      <TextField sx={{marginBottom: '0.5rem'}} name='title' variant='outlined' label='Title' fullWidth value={postData.title} 
+      <TextField sx={{marginBottom: '0.5rem',input: {color: `${darkMode? 'white': 'black'}`}, label: {color: `${darkMode? 'white': 'black'}`}}} 
+      name='title' variant='outlined' label='Title' fullWidth value={postData.title} 
       onChange={(e)=> setPostData({...postData, title: e.target.value})}/>
 
-      <TextField sx={{marginBottom: '0.5rem'}} name='description' variant='outlined' label='Description' fullWidth value={postData.description} 
+      <TextField sx={{marginBottom: '0.5rem',input: {color: `${darkMode? 'white': 'black'}`}, label: {color: `${darkMode? 'white': 'black'}`}}} 
+      name='description' variant='outlined' label='Description' fullWidth value={postData.description} 
       onChange={(e)=> setPostData({...postData, description: e.target.value})}/>
 
-      <TextField sx={{marginBottom: '0.5rem'}} name='location' variant='outlined' label='Location' fullWidth value={postData.location} 
+      <TextField sx={{marginBottom: '0.5rem', input: {color: `${darkMode? 'white': 'black'}`}, label: {color: `${darkMode? 'white': 'black'}`}}} 
+      name='location' variant='outlined' label='Location' fullWidth value={postData.location} 
       onChange={(e)=> setPostData({...postData, location: e.target.value})}/>
 
-      <TextField sx={{marginBottom: '0.5rem'}} name='pincode' variant='outlined' label='Pincode' fullWidth value={postData.pincode} 
+      <TextField sx={{marginBottom: '0.5rem', input: {color: `${darkMode? 'white': 'black'}`}, label: {color: `${darkMode? 'white': 'black'}`}}} 
+      name='pincode' variant='outlined' label='Pincode' fullWidth value={postData.pincode} 
       onChange={(e)=> setPostData({...postData, pincode: e.target.value})}/>
 
-      <Button onClick={getLocation}>Verify post</Button>
+      <Button onClick={getLocation} x={{marginBottom: "1rem"}} variant='contained' size="large" fullWidth>Verify post</Button>
 
-      <div style={{marginLeft: '1rem'}}>
+      <div style={{marginLeft: '1rem', marginTop: '1rem'}}>
         <FileBase  type="file"  multiple={false} onDone={({ base64 }) => setPostData({ ...postData, image: base64 })}/>
       </div>
       <Button sx={{marginBottom: "1rem", marginTop: "2rem"}} variant="contained" color="primary" size="large" type="submit" fullWidth>Submit</Button>

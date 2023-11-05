@@ -10,7 +10,7 @@ import VerifiedIcon from '@mui/icons-material/Verified';
 import moment from 'moment'
 import {useDispatch} from 'react-redux';
 import { deletePost, likePost , flagPost} from '../../../actions/posts.js'
-const Post = ({post, setCurrentId}) => {
+const Post = ({post, setCurrentId,darkMode}) => {
   const user = JSON.parse(localStorage.getItem('profile'));
   const dispatch = useDispatch();
 
@@ -31,7 +31,7 @@ const Post = ({post, setCurrentId}) => {
     if (post.flag.length > 0) {
       return post.likes.find((flag) => flag === (user?.result?.googleId || user?.result?._id))
         ? (
-          <><FlagIcon color='error' sx={{color: 'red[500]'}} fontSize="small" /></>
+          <><FlagIcon color='error' fontSize="small" /></>
         ) : (
           <><FlagOutlinedIcon color='error' fontSize="small" /></>
         );
@@ -41,14 +41,15 @@ const Post = ({post, setCurrentId}) => {
   };
 
   return (
-    <Card raised elevation={6} sx={{height: 'fit-content', marginTop: "2rem",marginBottom: "1rem", width: '34rem', backgroundColor: '#fdfbec', boxShadow: 3}}>
+    <Card raised elevation={6} sx={{height: 'fit-content', marginTop: "2rem",marginBottom: "1rem", width: '34rem',backgroundColor: `${darkMode? '#091e47': 'white'}`,
+    color: `${darkMode? 'white': 'black'}`, boxShadow: 3}}>
       <div style={{display: 'flex', justifyContent:'space-between'}}>
       <CardHeader
       avatar={
         <Avatar>{post.name.slice(0,1)}</Avatar>
       }
       title={post.name}
-      subheader={moment(post.createdAt).format("MMM Do YY")}
+      subheader={<Typography sx={{color: `${darkMode? 'white': 'black'}`, fontSize: '0.75rem'}} variant='body2'>{moment(post.createdAt).format("MMM Do YY")}</Typography>}
       />
       {(user?.result?.googleId === post?.creator || user?.result?._id === post?.creator) && (
       <Button onClick={()=> setCurrentId(post._id)}>
@@ -67,7 +68,7 @@ const Post = ({post, setCurrentId}) => {
         alt=""
       />
       <CardContent>
-        <Typography color="text.secondary" variant='body' sx={{fontSize: '1.1pc'}}>
+        <Typography variant='body' sx={{fontSize: '1.1pc',color: `${darkMode? 'white': 'black'}`}}>
           {post.description}
         </Typography>
       </CardContent>
