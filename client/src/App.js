@@ -15,18 +15,19 @@ import { useState } from 'react';
 
 function App() {
   const user = JSON.parse(localStorage.getItem('profile'));
-
+  console.log("User")
+  console.log(user)
   const [darkMode, setDarkMode] = useState(false)
   return (
     <Router>
-    <Container maxWidth='xl' sx={{backgroundColor: `${darkMode? '#04163a': '#e6e6ff'}`}}>
+    <Container maxWidth='xl' sx={{backgroundColor: `${darkMode? '#04163a': '#e6e6ff'}`, minHeight: "100vh"}}>
       <Navbar darkMode={darkMode} setDarkMode={setDarkMode}/>
       <Routes>
       <Route path='/' exact Component={()=> <Navigate to='/posts'/>}/>
       <Route path='/posts' exact element={<Home darkMode={darkMode}/>}/>
-      <Route path='/posts/search' exact Component={Home}/>
-      {/* <Route path='/user/:id' exact Component={UserDetails}/> */}
-      <Route path='/auth' exact Component={()=>(!user ? <Auth/> : <Navigate to="/posts"/>)}/>
+      <Route path='/posts/search' exact element={<Home darkMode={darkMode}/>}/>
+      <Route path='/userDetails' exact element={<UserDetails darkMode={darkMode}/>}/>
+      <Route path='/auth' exact Component={()=>(!user ? <Auth/> : <Home/>)}/>
 
       </Routes>
     </Container>

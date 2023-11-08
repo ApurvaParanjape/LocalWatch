@@ -126,13 +126,13 @@ if(postData.pincode === currPincode && currPincode!=="" && postData.pincode!==""
       name='pincode' variant='outlined' label='Pincode' fullWidth value={postData.pincode} 
       onChange={(e)=> setPostData({...postData, pincode: e.target.value})}/>
 
-      <Button onClick={getLocation} x={{marginBottom: "1rem"}} variant='contained' size="large" fullWidth>Verify post</Button>
+      <Button onClick={getLocation} x={{marginBottom: "1rem"}} variant='contained' color={`${darkMode? 'secondary': 'primary'}`} size="large" fullWidth>Verify post</Button>
 
       <div style={{marginLeft: '1rem', marginTop: '1rem'}}>
         <FileBase  type="file"  multiple={false} onDone={({ base64 }) => setPostData({ ...postData, image: base64 })}/>
       </div>
-      <Button sx={{marginBottom: "1rem", marginTop: "2rem"}} variant="contained" color="primary" size="large" type="submit" fullWidth>Submit</Button>
-      <Button variant="contained" color="secondary" size="small" onClick={clear} fullWidth>Clear</Button>
+      <Button sx={{marginBottom: "1rem", marginTop: "2rem"}} variant="contained" color={`${darkMode? 'secondary': 'primary'}`} size="large" type="submit" fullWidth>Submit</Button>
+      <Button variant="contained" color={`${darkMode? 'secondary': 'primary'}`} size="small" onClick={clear} fullWidth>Clear</Button>
       </form>  
     </Paper>
   )

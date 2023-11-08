@@ -20,11 +20,13 @@ const Post = ({post, setCurrentId,darkMode}) => {
         ? (
           <><ThumbUpAltIcon color='primary' fontSize="small" /></>
         ) : (
-          <><ThumbUpAltOutlinedIcon fontSize="small" /></>
+          <><ThumbUpAltOutlinedIcon color='primary' fontSize="small" /></>
         );
+    }else{
+
+      return <><ThumbUpAltOutlinedIcon fontSize="small" /></>
     }
 
-    return <><ThumbUpAltOutlinedIcon fontSize="small" /></>
   };
 
   const Flag = () => {
@@ -35,9 +37,11 @@ const Post = ({post, setCurrentId,darkMode}) => {
         ) : (
           <><FlagOutlinedIcon color='error' fontSize="small" /></>
         );
+    }else{
+
+       return <><FlagOutlinedIcon fontSize="small" /></>
     }
 
-    return <><FlagOutlinedIcon fontSize="small" /></>
   };
 
   return (

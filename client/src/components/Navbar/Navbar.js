@@ -67,8 +67,8 @@ const Navbar = ({darkMode, setDarkMode}) => {
                     <div style={{display: 'flex', justifyContent: 'space-between'}}>
                         <div style={{display: 'flex'}}>
                         <DarkModeIcon sx={{marginRight: '23px', fontSize: '2rem', cursor: 'pointer', color:`${darkMode? 'white': 'black'}`}} onClick={()=> setDarkMode(!darkMode)}/>
-                            <Avatar src={user.result.imageUrl} alt={user.result.name}>{user.result.name.charAt(0)}</Avatar>
-                            <Typography marginLeft={1} marginTop={0.5} variant='h6' sx={{textDecoration: 'none'}}>{user.result.name}</Typography>
+                            <Avatar onClick={()=> navigate('/userDetails')} src={user.result.imageUrl} alt={user.result.name}>{user.result.name.charAt(0)}</Avatar>
+                            <Typography onClick={()=> navigate('/userDetails')} marginLeft={1} marginTop={0.5} variant='h6' sx={{textDecoration: 'none', cursor: 'pointer'}}>{user.result.name}</Typography>
                         </div>
                             <Button variant='contained' color={`${darkMode? 'secondary': 'primary'}`} onClick={logout} sx={{marginLeft: '2rem'}}>Log Out</Button>
                       </div>
